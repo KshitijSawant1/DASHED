@@ -1,0 +1,50 @@
+{/* ===== Heading with fixed height (no layout shift) ===== */}
+<div className="relative mt-6">
+  {/* 1) Height reserver (takes space, invisible) */}
+  <p
+    aria-hidden
+    className="
+      invisible mb-4 leading-[1.05]
+      text-[clamp(2rem,6vw,4.5rem)]
+      /* Give plenty of vertical space on small screens */
+      min-h-[16em] sm:min-h-[12em] md:min-h-[10em] lg:min-h-[8em]
+    "
+  >
+    {/* Use one of your longest headlines so wrapping is similar */}
+    Turn theoretical knowledge into practical skills you can apply instantly
+  </p>
+
+  {/* 2) Absolutely positioned typewriter text */}
+  <h1 className="absolute inset-0 text-[clamp(2rem,6vw,4.5rem)] font-extrabold leading-[1.05] text-[--text]">
+    <TextType
+      text={[
+        "Find the best solution for your education and career growth",
+        "Learn with immersive, interactive visualizations that simplify complexity",
+        "Boost your coding confidence with guided practice and real-world examples",
+        "Master coding concepts step by step with structured learning paths",
+        "Visualize algorithms like never before through dynamic animations",
+        "Turn theoretical knowledge into practical skills you can apply instantly",
+        "Code smarter, not harder — accelerate your journey with smart tools",
+        "Transform complex topics into clarity with modern teaching methods",
+        "Build strong fundamentals with ease and move toward advanced mastery",
+        "Empower your learning journey with personalized recommendations",
+        "Practice, learn, and grow continuously with adaptive learning modules",
+        "Ace your interviews with confidence through targeted preparation tools",
+        "Interactive lessons designed for modern learners and fast-paced careers",
+        "Your personalized coding companion, available anytime, anywhere",
+        "Explore, experiment, and excel with hands-on coding challenges",
+        "Bridge the gap between classroom learning and industry expectations",
+        "Stay ahead with regularly updated content aligned to latest trends",
+        "Engage with a community of peers and mentors who share your goals",
+        "Transform curiosity into expertise with project-driven learning",
+        "Achieve mastery not just in code, but in problem-solving itself",
+      ]}
+      typingSpeed={75}
+      pauseDuration={1500}
+      showCursor
+      cursorCharacter="|"
+      textColors={["var(--text)"]}
+      cursorClassName="text-[--text]"
+    />
+  </h1>
+</div>

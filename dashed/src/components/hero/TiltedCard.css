@@ -1,0 +1,173 @@
+.tilted-card-figure {
+  position: relative;
+  width: 100%;
+  max-width: 380px; /* Desktop default */
+  perspective: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+/* The image container */
+.tilted-card-inner {
+  position: relative;
+  transform-style: preserve-3d;
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Keeps proportions consistent */
+  border-radius: 20px;
+}
+
+/* The image itself */
+.tilted-card-img {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  will-change: transform;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.tilted-card-figure:hover .tilted-card-img {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35), 0 0 25px rgba(59, 130, 246, 0.4);
+}
+
+/* Tooltip */
+.tilted-card-caption {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 6px;
+  background-color: #fff;
+  padding: 6px 12px;
+  font-size: 11px;
+  color: #2d2d2d;
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Overlay buttons */
+.tilted-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  padding: 0.5rem;
+  transform: translateZ(30px);
+}
+
+/* 📱 Responsive adjustments */
+@media (max-width: 1024px) {
+  .tilted-card-figure {
+    max-width: 320px;
+  }
+}
+@media (max-width: 768px) {
+  .tilted-card-figure {
+    max-width: 280px;
+  }
+  .tilted-card-overlay a {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+}
+@media (max-width: 480px) {
+  .tilted-card-figure {
+    max-width: 240px;
+  }
+  .tilted-card-img {
+    border-radius: 14px;
+  }
+  .tilted-card-overlay {
+    gap: 0.4rem;
+  }
+}
+.tilted-card-textblock {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+}
+
+.tilted-card-inner:hover .tilted-card-textblock {
+  border-color: rgba(147, 197, 253, 0.8); /* light-blue accent */
+  background: rgba(99, 102, 241, 0.25); /* violet tint */
+}
+/* Base (desktop/tablet) */
+.tilted-card-textblock {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%) translateZ(40px);
+  z-index: 2;
+
+  /* responsive sizing */
+  padding: clamp(6px, 1.2vw, 10px) clamp(12px, 2vw, 16px);
+  font-size: clamp(0.8rem, 1.4vw, 1rem);
+  font-weight: 600;
+
+  /* look & feel */
+  color: #fff;
+  text-align: center;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(4px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+
+  /* safety for long text */
+  max-width: min(88%, 420px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.tilted-card-inner:hover .tilted-card-textblock {
+  border-color: rgba(147, 197, 253, 0.85); /* sky-300-ish */
+  background: rgba(99, 102, 241, 0.28); /* violet tint */
+}
+
+/* Mobile: make it a full, comfy pill that never overflows */
+@media (max-width: 640px) {
+  .tilted-card-textblock {
+    bottom: 0.75rem;
+    left: 12px;
+    right: 12px;
+    transform: translateZ(40px); /* no translateX on mobile */
+    max-width: none;
+
+    padding: 10px 14px;
+    font-size: 0.9rem;
+    border-width: 1.5px;
+
+    /* allow up to 2 lines and clamp */
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tilted-card-textblock {
+    transition: none;
+  }
+}
