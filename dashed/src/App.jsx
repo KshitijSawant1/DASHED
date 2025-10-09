@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/hero/Hero";
 import Signin from "./components/register/Signin";
 import Signup from "./components/register/Signup";
+import PageNotFound from "./components/others/PageNotFound";
 const App = () => {
   return (
     <main className="relative min-h-screen w-full overflow-hidden bg-[--surface] text-[--text] transition-colors duration-300">
@@ -15,6 +16,7 @@ const App = () => {
           <Hero />
           <Signin />
           <Signup />
+          <PageNotFound />
         </div>
       </div>
     </main>
