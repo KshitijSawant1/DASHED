@@ -30,9 +30,10 @@ import Testimonials from "./Testimonials";
 import TiltedCard from "./TiltedCard";
 import PFP from "../../assets/PFP1.png";
 import DashedOverview from "./DashedOverview";
-
 import { LuZap } from "react-icons/lu";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { useUserAuth } from "../context/AuthContext";
 
 const features = [
   "Interactive Learning",
@@ -75,6 +76,12 @@ const topics = [
 ];
 
 const Hero = () => {
+  const { user } = useUserAuth();
+  const navigate = useNavigate();
+
+  const handleContinue = () => {
+    navigate(user ? "/core" : "/signin", { replace: true });
+  };
   const handleScroll = () => {
     window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
   };
@@ -143,6 +150,7 @@ const Hero = () => {
                 <div className="pointer-events-none absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-violet-500 via-sky-500 to-violet-500 bg-[length:200%_200%] animate-borderMove" />
                 <div className="relative z-10 grid grid-cols-2 gap-1 rounded-full bg-[--card] p-2 shadow-lg">
                   <button
+                    onClick={handleContinue}
                     className="rounded-full px-3 sm:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg font-semibold text-[--text] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 hover:bg-black/5 dark:hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                     aria-label="Continue"
                   >
@@ -489,7 +497,6 @@ const Hero = () => {
           </div>
         </div>
       </section>
-
     </section>
   );
 };

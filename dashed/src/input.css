@@ -42,7 +42,7 @@ html.dark {
   --text: #e5e7eb; /* gray-200 */
   --muted: #94a3b8; /* slate-400 */
   --card: #0f172a; /* near-black card */
-  --border: #1f2937; /* gray-800 */
+  --border: #767d8a; /* gray-800 */
 }
 
 /* in input.css */
@@ -142,3 +142,4 @@ html.dark .bg-aurora { opacity: .45; }        /* a touch brighter in dark */
   -webkit-mask-composite: xor;
           mask-composite: exclude;
 }
+

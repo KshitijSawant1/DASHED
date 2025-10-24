@@ -1,20 +1,41 @@
-// src/pages/Signin.jsx
 import React, { useState } from "react";
 import logo from "../../assets/logos/L1.png";
 import bgPattern from "../../assets/bgpatterns/TBG1.svg";
+import { useNavigate, Link } from "react-router-dom";
+import { useUserAuth } from "../context/AuthContext";
 
 const Signin = () => {
+  const navigate = useNavigate();
+  const { signInUser } = useUserAuth(); // from AuthContext
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
 
-  const onSubmit = (e) => {
+  // Handle input change
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setForm((prev) => ({ ...prev, [id]: value }));
+  };
+
+  // Handle form submit
+  const onSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     setLoading(true);
-    setTimeout(() => {
+
+    const { email, password } = form;
+
+    const { success, error } = await signInUser(email, password);
+
+    if (!success) {
+      setErrorMsg(error || "Invalid credentials. Please try again.");
       setLoading(false);
-      setErrorMsg("This is a demo UI — hook up your auth to proceed.");
-    }, 800);
+      return;
+    }
+
+    // Success → redirect
+    navigate("/core");
   };
 
   return (
@@ -40,14 +61,13 @@ const Signin = () => {
           rounded-2xl sm:rounded-3xl ring-1 ring-gray-200 dark:ring-white/10 shadow-lg sm:shadow-xl
         "
       >
-        {/* LEFT: Gradient / Brand */}
+        {/* LEFT: Brand gradient */}
         <div
           className="
             order-1 md:order-2 relative p-4 sm:p-8 text-white flex flex-col justify-between
             bg-[radial-gradient(700px_400px_at_-20%_-20%,rgba(139,92,246,.45),transparent_60%),radial-gradient(800px_500px_at_120%_120%,rgba(14,165,233,.42),transparent_55%),linear-gradient(120deg,#6d28d9_0%,#2563eb_55%,#0ea5e9_100%)]
           "
         >
-          {/* Logo */}
           <div className="flex items-center gap-2 sm:gap-3">
             <img
               src={logo}
@@ -62,7 +82,6 @@ const Signin = () => {
             </span>
           </div>
 
-          {/* Hidden on mobile */}
           <div className="hidden md:block">
             <div className="mt-6">
               <h1 className="text-2xl sm:text-3xl font-extrabold leading-snug">
@@ -82,7 +101,7 @@ const Signin = () => {
           </div>
         </div>
 
-        {/* RIGHT: Signin Form */}
+        {/* RIGHT: Form */}
         <div className="order-2 md:order-1 p-5 sm:p-8">
           <div className="mb-5 text-center md:text-left">
             <h2 className="text-xl sm:text-2xl font-bold">Welcome back</h2>
@@ -103,6 +122,8 @@ const Signin = () => {
               <input
                 id="email"
                 type="email"
+                value={form.email}
+                onChange={handleChange}
                 placeholder="you@domain.com"
                 required
                 className="
@@ -134,6 +155,8 @@ const Signin = () => {
               <input
                 id="password"
                 type="password"
+                value={form.password}
+                onChange={handleChange}
                 placeholder="••••••••"
                 required
                 className="
@@ -173,7 +196,7 @@ const Signin = () => {
               {loading ? "Signing in…" : "Sign In"}
             </button>
 
-            {/* Error */}
+            {/* Error Message */}
             {errorMsg && (
               <p className="text-center text-xs sm:text-sm font-medium text-red-600 bg-red-100/80 dark:bg-red-900/20 ring-1 ring-red-200 dark:ring-red-900/40 rounded-md px-3 py-2">
                 {errorMsg}
@@ -184,13 +207,12 @@ const Signin = () => {
           {/* Footer */}
           <p className="text-xs sm:text-sm text-[--muted] mt-4 text-center">
             New to Dashed?{" "}
-            <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
+            <Link
+              to="/signup"
               className="text-sky-600 dark:text-sky-400 font-medium hover:underline"
             >
               Create an account
-            </a>
+            </Link>
           </p>
         </div>
       </section>

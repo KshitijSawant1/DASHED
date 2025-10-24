@@ -3,24 +3,57 @@ import React, { useState } from "react";
 import logo from "../../assets/logos/L1.png";
 import bgPattern from "../../assets/bgpatterns/TBG1.svg";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate, Link } from "react-router-dom";
+import { useUserAuth } from "../context/AuthContext";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const { signUpNewUser } = useUserAuth(); // ✅ from your AuthContext
+
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    dob: "",
+    phone: "",
+    email: "",
+    password: "",
+  });
+
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const onSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.id]: e.target.value });
+  };
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setErrorMsg("This is a demo UI — hook up your auth to proceed.");
-    }, 800);
+
+    const { firstname, lastname, dob, phone, email, password } = form;
+
+    const { success, error } = await signUpNewUser(
+      firstname,
+      lastname,
+      dob,
+      phone,
+      email,
+      password
+    );
+
+    setLoading(false);
+
+    if (!success) {
+      setErrorMsg(error?.message || "Signup failed. Try again.");
+    } else {
+      navigate("/profile"); // redirect after signup
+    }
   };
 
   return (
     <main className="relative min-h-screen w-full flex items-center justify-center bg-[--surface] px-3 py-6 sm:px-4 sm:py-8 text-[--text]">
-      {/* Background pattern layer */}
+      {/* Background pattern */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
@@ -34,20 +67,9 @@ const Signup = () => {
         }}
       />
 
-      <section
-        className="
-          w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 overflow-hidden
-          bg-[#eff6ff] dark:bg-[#0b1220]
-          rounded-2xl sm:rounded-3xl ring-1 ring-gray-200 dark:ring-white/10 shadow-lg sm:shadow-xl
-        "
-      >
+      <section className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 overflow-hidden bg-[#eff6ff] dark:bg-[#0b1220] rounded-2xl sm:rounded-3xl ring-1 ring-gray-200 dark:ring-white/10 shadow-lg sm:shadow-xl">
         {/* LEFT: Gradient / Brand */}
-        <div
-          className="
-            order-1 md:order-2 relative p-4 sm:p-6 text-white flex flex-col justify-between
-            bg-[radial-gradient(700px_400px_at_-20%_-20%,rgba(139,92,246,.45),transparent_60%),radial-gradient(800px_500px_at_120%_120%,rgba(14,165,233,.42),transparent_55%),linear-gradient(120deg,#6d28d9_0%,#2563eb_55%,#0ea5e9_100%)]
-          "
-        >
+        <div className="order-1 md:order-2 relative p-4 sm:p-6 text-white flex flex-col justify-between bg-[radial-gradient(700px_400px_at_-20%_-20%,rgba(139,92,246,.45),transparent_60%),radial-gradient(800px_500px_at_120%_120%,rgba(14,165,233,.42),transparent_55%),linear-gradient(120deg,#6d28d9_0%,#2563eb_55%,#0ea5e9_100%)]">
           <div className="flex items-center gap-2 sm:gap-3">
             <img
               src={logo}
@@ -62,7 +84,6 @@ const Signup = () => {
             </span>
           </div>
 
-          {/* Hidden on mobile, visible from md up */}
           <div className="hidden md:block">
             <div className="mt-6">
               <h1 className="text-2xl font-extrabold leading-snug">
@@ -95,25 +116,39 @@ const Signup = () => {
           </div>
 
           <form onSubmit={onSubmit} className="space-y-3 sm:space-y-5">
-            {/* Name */}
+            {/* First Name */}
             <div>
               <label
-                htmlFor="name"
+                htmlFor="firstname"
                 className="block text-xs sm:text-sm font-medium mb-1"
               >
-                Name
+                First Name
               </label>
               <input
-                id="name"
+                id="firstname"
                 type="text"
-                placeholder="Enter your name"
+                value={form.firstname}
+                onChange={handleChange}
                 required
-                className="
-                  w-full px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base
-                  bg-[--surface] text-[--text]
-                  ring-1 ring-[--border] dark:ring-white/10
-                  focus:outline-none focus:ring-2 focus:ring-sky-500
-                "
+                className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
+              />
+            </div>
+
+            {/* Last Name */}
+            <div>
+              <label
+                htmlFor="lastname"
+                className="block text-xs sm:text-sm font-medium mb-1"
+              >
+                Last Name
+              </label>
+              <input
+                id="lastname"
+                type="text"
+                value={form.lastname}
+                onChange={handleChange}
+                required
+                className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -128,14 +163,11 @@ const Signup = () => {
               <input
                 id="email"
                 type="email"
+                value={form.email}
+                onChange={handleChange}
                 placeholder="you@company.com"
                 required
-                className="
-                  w-full px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base
-                  bg-[--surface] text-[--text]
-                  ring-1 ring-[--border] dark:ring-white/10
-                  focus:outline-none focus:ring-2 focus:ring-sky-500
-                "
+                className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
@@ -150,54 +182,49 @@ const Signup = () => {
               <input
                 id="password"
                 type="password"
-                placeholder="••••••••"
+                value={form.password}
+                onChange={handleChange}
                 required
-                className="
-                  w-full px-3 sm:px-4 py-2 rounded-lg text-sm sm:text-base
-                  bg-[--surface] text-[--text]
-                  ring-1 ring-[--border] dark:ring-white/10
-                  focus:outline-none focus:ring-2 focus:ring-sky-500
-                "
+                placeholder="••••••••"
+                className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
               />
             </div>
 
-            {/* Age & Focus */}
+            {/* DOB & Phone */}
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label
-                  htmlFor="age"
+                  htmlFor="dob"
                   className="block text-xs sm:text-sm font-medium mb-1"
                 >
-                  Age
+                  Date of Birth
                 </label>
                 <input
-                  id="age"
-                  type="number"
-                  placeholder="18"
-                  className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] text-[--text] ring-1 ring-[--border] dark:ring-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  id="dob"
+                  type="date"
+                  value={form.dob}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
                 />
               </div>
 
               <div>
                 <label
-                  htmlFor="goal"
+                  htmlFor="phone"
                   className="block text-xs sm:text-sm font-medium mb-1"
                 >
-                  Focus
+                  Phone
                 </label>
-                <select
-                  id="goal"
-                  className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] text-[--text] ring-1 ring-[--border] dark:ring-white/10 focus:outline-none focus:ring-2 focus:ring-sky-500"
-                  defaultValue="DSA"
-                >
-                  {["DSA", "WebDev", "ML", "CP", "Interview Prep"].map(
-                    (goal) => (
-                      <option key={goal} value={goal}>
-                        {goal}
-                      </option>
-                    )
-                  )}
-                </select>
+                <input
+                  id="phone"
+                  type="tel"
+                  value={form.phone}
+                  onChange={handleChange}
+                  required
+                  placeholder="+91 9876543210"
+                  className="w-full px-3 sm:px-4 py-2 rounded-lg text-sm bg-[--surface] ring-1 ring-[--border] focus:ring-2 focus:ring-sky-500"
+                />
               </div>
             </div>
 
@@ -205,29 +232,23 @@ const Signup = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-lg py-2 font-semibold text-sm sm:text-base text-white bg-gradient-to-r from-violet-600 to-sky-500 hover:brightness-105 transition disabled:opacity-60"
+              className="w-full rounded-lg py-2 font-semibold text-white bg-gradient-to-r from-violet-600 to-sky-500 hover:brightness-105 transition disabled:opacity-60"
             >
-              {loading ? "Creating…" : "Sign up"}
+              {loading ? "Creating..." : "Sign up"}
             </button>
 
-            {/* Divider */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              <span className="h-px flex-1 bg-gray-300 dark:bg-white/10" />
-              <span className="text-[10px] sm:text-xs text-[--muted]">OR</span>
-              <span className="h-px flex-1 bg-gray-300 dark:bg-white/10" />
-            </div>
-
-            {/* Google login */}
+            {/* Google login (optional future) */}
             <button
               type="button"
-              className="w-full inline-flex items-center justify-center gap-2 sm:gap-3 rounded-lg py-2 font-semibold text-sm bg-white text-[--text] dark:bg-[#0f172a] ring-1 ring-gray-300 dark:ring-white/10 hover:bg-white/70 dark:hover:bg-white/10 transition"
+              className="w-full inline-flex items-center justify-center gap-2 sm:gap-3 rounded-lg py-2 font-semibold text-sm bg-white text-[--text] ring-1 ring-gray-300 hover:bg-white/70 transition"
+              onClick={() => alert("Google OAuth coming soon")}
             >
               <FcGoogle className="text-base sm:text-lg" /> Login with Google
             </button>
 
-            {/* Error */}
+            {/* Error message */}
             {errorMsg && (
-              <p className="text-center text-xs sm:text-sm font-medium text-red-600 bg-red-100/80 dark:bg-red-900/20 ring-1 ring-red-200 dark:ring-red-900/40 rounded-md px-3 py-2">
+              <p className="text-center text-sm font-medium text-red-600 bg-red-100/80 rounded-md px-3 py-2">
                 {errorMsg}
               </p>
             )}
@@ -235,13 +256,12 @@ const Signup = () => {
 
           <p className="text-xs sm:text-sm text-[--muted] mt-4 text-center">
             Have an account?{" "}
-            <a
-              href="#"
-              onClick={(e) => e.preventDefault()}
-              className="text-sky-600 dark:text-sky-400 font-medium hover:underline"
+            <Link
+              to="/signin"
+              className="text-sky-600 font-medium hover:underline"
             >
               Sign in
-            </a>
+            </Link>
           </p>
         </div>
       </section>

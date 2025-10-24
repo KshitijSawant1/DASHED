@@ -1,10 +1,16 @@
 // src/components/Navbar.jsx
-import React, { useState, useEffect } from "react";
-import { FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
-import logoLight from "../assets/logos/L1.png"; // <- adjust paths if needed
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { FiMenu, FiX, FiSun, FiMoon, FiUser } from "react-icons/fi";
+import { FaUserAstronaut } from "react-icons/fa";
+import logoLight from "../assets/logos/L1.png";
 import logoDark from "../assets/logos/L2.png";
+import { useUserAuth } from "./context/AuthContext"; // adjust if your path differs
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const { user } = useUserAuth(); // <-- auth state
+
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem("theme");
@@ -34,19 +40,22 @@ const Navbar = () => {
 
   const toggleTheme = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
 
-  const Link = ({ href, children, onClick }) => (
-    <a
-      href={href}
-      onClick={onClick}
-      className="
+  // Reusable router link
+  const NavBtn = ({ to, children }) => (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        `
         inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium
+        transition-colors
         text-[--muted] hover:text-[--text]
         hover:bg-black/5 dark:hover:bg-white/10
-        transition-colors
-      "
+        ${isActive ? "text-[--text] bg-black/5 dark:bg-white/10" : ""}
+      `
+      }
     >
       {children}
-    </a>
+    </NavLink>
   );
 
   const ThemeButton = ({ className = "" }) => (
@@ -65,29 +74,38 @@ const Navbar = () => {
     </button>
   );
 
+  // Link sets
+  const authedLinks = [
+    { to: "/core", label: "Core" },
+    { to: "/stack", label: "Stack" },
+  ];
+  const publicLinks = [
+    { to: "/signin", label: "Signin" },
+    { to: "/signup", label: "Signup" },
+  ];
+  const links = user ? authedLinks : publicLinks;
+
   return (
     <nav
-      className="
-        fixed inset-x-0 top-0 z-50
-        backdrop-blur supports-[backdrop-filter]:bg-transparent
-      "
-      // subtle glass with theme vars
-      style={{
-        background: "color-mix(in srgb, var(--surface) 70%, transparent)",
-      }}
+      className="fixed inset-x-0 top-0 z-50"
+      style={{ background: "transparent" }} // outer shell fully transparent
     >
-      {/* Pill container */}
+      {/* Glass pill */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
         <div
           className="
             flex items-center justify-between
-            rounded-2xl bg-[--card]/80 ring-1 ring-[--border] dark:ring-white/10
-            px-4 sm:px-6 py-2 shadow-sm ring-gray-300
+            rounded-2xl
+            px-4 sm:px-6 py-2
+            bg-[--card]/80
+            ring-1
+            shadow-[0_6px_20px_-12px_rgba(0,0,0,0.35)]
+            backdrop-blur
           "
+          style={{ border: "1px solid var(--border)" }}
         >
           {/* Brand */}
-          <a href="#" className="flex items-center gap-3">
-            {/* switch logos with theme */}
+          <NavLink to="/" className="flex items-center gap-3">
             <img
               src={logoLight}
               alt="Dashed"
@@ -109,18 +127,45 @@ const Navbar = () => {
             >
               DASHED
             </span>
-          </a>
+          </NavLink>
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-1">
-            <Link href="#about">About</Link>
-            <Link href="#features">Features</Link>
-            <Link href="#contact">Contact</Link>
+            {links.map((l) => (
+              <NavBtn key={l.to} to={l.to}>
+                {l.label}
+              </NavBtn>
+            ))}
+
+            {/* When signed in, show a compact icon link to Profile as well (optional) */}
+            {user && (
+              <button
+                onClick={() => navigate("/profile")}
+                className="ml-1 inline-flex h-9 w-9 items-center justify-center rounded-full
+                           text-[--text] hover:bg-black/5 dark:hover:bg-white/10 transition"
+                title="Profile"
+                aria-label="Profile"
+              >
+                <FaUserAstronaut size={18} />
+              </button>
+            )}
+
             <ThemeButton className="ml-2" />
           </div>
 
-          {/* Mobile toggles */}
+          {/* Mobile toggles (show Profile icon when signed in) */}
           <div className="md:hidden flex items-center gap-2">
+            {user && (
+              <button
+                onClick={() => navigate("/profile")}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full
+                           text-[--text] hover:bg-black/5 dark:hover:bg-white/10 transition"
+                title="Profile"
+                aria-label="Profile"
+              >
+                <FiUser size={18} />
+              </button>
+            )}
             <ThemeButton />
             <button
               onClick={() => setIsOpen((s) => !s)}
@@ -140,21 +185,15 @@ const Navbar = () => {
           md:hidden overflow-hidden transition-[max-height,opacity]
           ${isOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"}
         `}
-        style={{
-          background: "color-mix(in srgb, var(--surface) 85%, transparent)",
-        }}
+        style={{ background: "transparent" }}
       >
         <div className="mx-auto max-w-7xl px-6 pb-4">
-          <div className="mt-2 grid gap-1 rounded-2xl bg-[--card]/80 ring-1 ring-[--border] dark:ring-white/10 p-2">
-            <Link href="#about" onClick={() => setIsOpen(false)}>
-              About
-            </Link>
-            <Link href="#features" onClick={() => setIsOpen(false)}>
-              Features
-            </Link>
-            <Link href="#contact" onClick={() => setIsOpen(false)}>
-              Contact
-            </Link>
+          <div className="mt-2 grid gap-1 rounded-2xl bg-[--card]/80 ring-1 ring-[--border] p-2 backdrop-blur">
+            {links.map((l) => (
+              <NavBtn key={l.to} to={l.to}>
+                {l.label}
+              </NavBtn>
+            ))}
           </div>
         </div>
       </div>
