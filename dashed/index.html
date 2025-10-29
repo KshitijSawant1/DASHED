@@ -1,29 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Character Encoding -->
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- Viewport for Responsive Design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Title -->
+    <title>DASHED – Debug. Analyze. Simplify. Sharpen. Evolve. Develop.</title>
+
+    <!-- Meta Description -->
+    <meta
+      name="description"
+      content="DASHED is an AI-powered, interactive Data Structures and Algorithms (DSA) learning platform that helps learners debug, analyze, and visualize code logic through real-time feedback and smart guidance."
+    />
+
+    <!-- Favicon & App Icons -->
     <link rel="icon" type="image/png" href="/L1.png" />
+    <link rel="apple-touch-icon" href="/L1.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap"
       rel="stylesheet"
     />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashed</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+    <!-- Open Graph (Facebook, LinkedIn) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_IN" />
+    <meta
+      property="og:title"
+      content="DASHED – Interactive DSA Learning Platform"
+    />
+    <meta
+      property="og:description"
+      content="Experience next-generation DSA learning with DASHED — an AI-assisted, visual, and modular platform that helps learners debug smarter and evolve faster."
+    />
+    <meta property="og:image" content="/summary.png" />
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="DASHED – DSA Learning Reimagined" />
+    <meta
+      name="twitter:description"
+      content="Code. Visualize. Learn. Master DSA through intelligent interaction with DASHED — your personal AI mentor for algorithms."
+    />
+    <meta name="twitter:image" content="/summary.png" />
+
+    <!-- Import Map -->
+    <script type="importmap">
+      {
+        "imports": {
+          "stackframe": "/vendor/stackframe.min.js",
+          "error-stack-parser": "/vendor/error-stack-parser.min.js"
+        }
+      }
+    </script>
+
+    <!-- Theme Initialization -->
     <script>
       (() => {
-        const stored = localStorage.getItem("theme");
-        const systemDark = window.matchMedia(
+        const storedTheme = localStorage.getItem("theme");
+        const systemPrefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
-        const theme = stored || (systemDark ? "dark" : "light");
-        document.documentElement.classList.toggle("dark", theme === "dark");
+        const activeTheme =
+          storedTheme || (systemPrefersDark ? "dark" : "light");
+        document.documentElement.classList.toggle(
+          "dark",
+          activeTheme === "dark"
+        );
       })();
     </script>
+
+    <!-- Progressive Enhancement -->
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="author" content="Kshitij K. Sawant" />
+    <meta
+      name="keywords"
+      content="DASHED, DSA, Learning Platform, AI, Visualization, React, Pyodide, Monaco Editor, TailwindCSS, Supabase"
+    />
+  </head>
+
+  <body
+    class="bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-300"
+  >
+    <!-- React Root -->
+    <div id="root"></div>
+
+    <!-- Main Entry Script -->
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- Flowbite JS (optional UI library) -->
+    <script src="/node_modules/flowbite/dist/flowbite.min.js"></script>
   </body>
 </html>

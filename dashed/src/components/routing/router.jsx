@@ -3,6 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "../layouts/Layout";
 import ProtectedRoute from "./ProtectedRoute";
 import PagesHub from "../others/PagesHub";
+import CodeEditor from "../editor/CodeEditor";
+
 
 // Lazy-loaded pages
 const Hero = lazy(() => import("../hero/Hero"));
@@ -40,6 +42,12 @@ export const router = createBrowserRouter([
         path: "stack",
         element: (
           <ProtectedRoute>{withSuspense(<StackVisualizer />)}</ProtectedRoute>
+        ),
+      },
+          {
+        path: "editor",
+        element: (
+          <ProtectedRoute>{withSuspense(<CodeEditor />)}</ProtectedRoute>
         ),
       },
       { path: "*", element: withSuspense(<PageNotFound />) },

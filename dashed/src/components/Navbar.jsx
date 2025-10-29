@@ -78,6 +78,7 @@ const Navbar = () => {
   const authedLinks = [
     { to: "/core", label: "Core" },
     { to: "/stack", label: "Stack" },
+    { to: "/editor", label: "Editor" },
   ];
   const publicLinks = [
     { to: "/signin", label: "Signin" },

@@ -2,7 +2,7 @@
 import React from "react";
 import TextType from "./TextType";
 import "../../input.css";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+
 import {
   FaCode,
   FaLaptopCode,
@@ -23,30 +23,18 @@ import {
 } from "react-icons/fa";
 import { FiCpu } from "react-icons/fi";
 import { MdOutlineDesignServices } from "react-icons/md";
-import Title from "./Title";
+//import Title from "./Title";
 import PillCarousel from "./PillCarousel";
 import FAQ from "./FAQ";
 import Testimonials from "./Testimonials";
-import TiltedCard from "./TiltedCard";
-import PFP from "../../assets/PFP1.png";
 import DashedOverview from "./DashedOverview";
 import { LuZap } from "react-icons/lu";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import { useUserAuth } from "../context/AuthContext";
+import Creator from "./Creator";
+import Timeline from "./Timeline";
 
-const features = [
-  "Interactive Learning",
-  "AI Assistance",
-  "Visualized Concepts",
-  "Mock Interviews",
-  "Hands-on Practice",
-  "Career Guidance",
-  "Community Support",
-  "Gamified Challenges",
-  "Real-World Projects",
-  "Step-by-Step Roadmaps",
-];
 const topics = [
   "Data Structures",
   "Algorithms",
@@ -330,173 +318,12 @@ const Hero = () => {
       <hr className="mt-6 border-t border-[--border] dark:border-white" />
       <DashedOverview />
 
-      {/* Meet the Team Section */}
+      {/* Meet the Creator Section */}
       <hr className="mt-6 border-t border-[--border] dark:border-white" />
-      <section className="w-full flex flex-col items-center justify-center text-center px-6 pt-5 pb-8">
-        {/* Title */}
-        <h2
-          className="text-4xl sm:text-5xl font-extrabold bg-gradient-to-r from-violet-500 to-sky-500 bg-clip-text text-transparent"
-          style={{ fontFamily: "'Audiowide', sans-serif" }}
-        >
-          MEET THE TEAM
-        </h2>
+      <Timeline />
 
-        {/* Subtitle */}
-        <p className="mt-4 max-w-2xl text-[--muted] text-sm sm:text-base leading-relaxed">
-          The minds behind{" "}
-          <span className="font-semibold text-[--text]">DASHED</span> — bringing
-          ideas to life through innovation, creativity, and collaboration.
-        </p>
-
-        <div className="w-full flex flex-wrap justify-center items-center gap-16 px-4 py-8">
-          {/* Left Card */}
-          <div className="flex-1 min-w-[260px] max-w-[340px] scale-100 transition-transform duration-300">
-            <TiltedCard
-              imageSrc={PFP}
-              altText="Name"
-              captionText="Name"
-              textBlock="Title"
-              containerHeight="auto"
-              containerWidth="100%"
-              imageHeight="auto"
-              imageWidth="100%"
-              rotateAmplitude={10}
-              scaleOnHover={1.15}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={true}
-              overlayContent={
-                <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                  {/* GitHub Button */}
-                  <a
-                    href="https://github.com/KshitijSawant1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#24292F] hover:bg-[#1f2327]
-              focus:ring-4 focus:outline-none focus:ring-[#24292F]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaGithub className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">GitHub</span>
-                  </a>
-
-                  {/* LinkedIn Button */}
-                  <a
-                    href="https://www.linkedin.com/in/kshitijksawant/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#0A66C2] hover:bg-[#084c98]
-              focus:ring-4 focus:outline-none focus:ring-[#0A66C2]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaLinkedin className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">LinkedIn</span>
-                  </a>
-                </div>
-              }
-            />
-          </div>
-
-          {/* Center Card */}
-          <div className="flex-1 min-w-[260px] max-w-[340px] scale-100 transition-transform duration-300">
-            <TiltedCard
-              imageSrc="https://ik.imagekit.io/rhzh8en76/Helixure%20v2.0%20Assests/Kshitij%20K%20Sawant%20Cryptocurrency%20Photo.jpg?updatedAt=1751044291591"
-              altText="Kshitij K Sawant"
-              captionText="Kshitij K Sawant"
-              textBlock="Project Manager"
-              containerHeight="auto"
-              containerWidth="100%"
-              imageHeight="auto"
-              imageWidth="100%"
-              rotateAmplitude={10}
-              scaleOnHover={1.15}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={true}
-              overlayContent={
-                <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                  {/* GitHub Button */}
-                  <a
-                    href="https://github.com/KshitijSawant1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#24292F] hover:bg-[#1f2327]
-              focus:ring-4 focus:outline-none focus:ring-[#24292F]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaGithub className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">GitHub</span>
-                  </a>
-
-                  {/* LinkedIn Button */}
-                  <a
-                    href="https://www.linkedin.com/in/kshitijksawant/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#0A66C2] hover:bg-[#084c98]
-              focus:ring-4 focus:outline-none focus:ring-[#0A66C2]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaLinkedin className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">LinkedIn</span>
-                  </a>
-                </div>
-              }
-            />
-          </div>
-
-          {/* Right Card */}
-          <div className="flex-1 min-w-[260px] max-w-[340px] scale-100 transition-transform duration-300">
-            <TiltedCard
-              imageSrc={PFP}
-              altText="Name"
-              captionText="Name"
-              textBlock="Title"
-              containerHeight="auto"
-              containerWidth="100%"
-              imageHeight="auto"
-              imageWidth="100%"
-              rotateAmplitude={10}
-              scaleOnHover={1.15}
-              showMobileWarning={false}
-              showTooltip={true}
-              displayOverlayContent={true}
-              overlayContent={
-                <div className="absolute top-4 left-4 flex flex-col gap-2 z-10">
-                  <a
-                    href="https://github.com/KshitijSawant1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#24292F] hover:bg-[#1f2327]
-              focus:ring-4 focus:outline-none focus:ring-[#24292F]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaGithub className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">GitHub</span>
-                  </a>
-                  <a
-                    href="https://www.linkedin.com/in/kshitijksawant/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white bg-[#0A66C2] hover:bg-[#084c98]
-              focus:ring-4 focus:outline-none focus:ring-[#0A66C2]/50
-              font-medium rounded-lg text-sm px-3 sm:px-4 py-2
-              inline-flex items-center justify-center transition"
-                  >
-                    <FaLinkedin className="text-lg sm:text-xl" />
-                    <span className="hidden sm:inline ml-2">LinkedIn</span>
-                  </a>
-                </div>
-              }
-            />
-          </div>
-        </div>
-      </section>
+      <hr className="mt-6 border-t border-[--border] dark:border-white" />
+      {/*<Creator />*/}
     </section>
   );
 };
