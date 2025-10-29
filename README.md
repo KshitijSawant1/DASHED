@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/logos/L1.png" alt="DASHED Logo" width="180" />
+  <img src="dashed/src/assets/logos/L1.png" alt="DASHED Logo" width="180" />
 </p>
 
 <h1 align="center">DASHED – Debug. Analyze. Simplify. Sharpen. Evolve. Develop.</h1>
@@ -11,12 +11,11 @@
 
 ---
 
-## Website
+### Website
 Visit the official DASHED platform: **[Click to Visit](https://dashed-ks.netlify.app/)**
 
----
 
-## Overview
+### Overview
 
 **DASHED** (Data Structures and Algorithm Self Helped Educational Dashboard) is an interactive learning platform designed to make **Data Structures and Algorithms (DSA)** engaging, visual, and intuitive.  
 It enables learners to **code, test, debug, and visualize** algorithmic operations directly within a web browser — eliminating the need for local setup.  
@@ -25,7 +24,7 @@ Built with **React**, **Monaco Editor**, **Pyodide**, and **Tailwind CSS**, DASH
 
 ---
 
-## Key Features
+### Key Features
 
 | **Category** | **Description** |
 |---------------|-----------------|
@@ -39,7 +38,7 @@ Built with **React**, **Monaco Editor**, **Pyodide**, and **Tailwind CSS**, DASH
 
 ---
 
-## Project Objectives
+### Project Objectives
 
 1. Simplify DSA learning through visual and interactive coding experiences.  
 2. Provide real-time guidance and correction using AI-based hint systems.  
@@ -49,7 +48,7 @@ Built with **React**, **Monaco Editor**, **Pyodide**, and **Tailwind CSS**, DASH
 
 ---
 
-## System Architecture
+### System Architecture
 
 DASHED follows a **modular 4-layer architecture**:
 
@@ -70,27 +69,27 @@ DASHED follows a **modular 4-layer architecture**:
 
 ---
 
-## Core Components
+### Core Components
 
-### 1. **Task Selector**
+#### 1. **Task Selector**
 Allows users to choose the data structure operation (Push, Pop, Peek, Display). Dynamically loads reference code and stepwise learning material.
 
-### 2. **Monaco Editor**
+#### 2. **Monaco Editor**
 Provides real-time code highlighting, intelligent suggestions, and inline debugging — all within a responsive React component.
 
-### 3. **Output & Hint Tabs**
+#### 3. **Output & Hint Tabs**
 - **Output Tab:** Displays code results with green/red color cues.  
 - **Hint Tab:** Shows real-time error guidance using AI-style contextual messages.  
 
-### 4. **Task Library (JSON)**
+#### 4. **Task Library (JSON)**
 Houses all Stack operation templates, step references, and learning scripts. Easily extendable for new DSA modules.
 
-### 5. **Visual Learning UI**
+#### 5. **Visual Learning UI**
 Modern layout using TailwindCSS and Flowbite, ensuring clarity, consistency, and accessibility across devices.
 
 ---
 
-## Experimental Results
+### Experimental Results
 
 | **Parameter** | **Measured Result** | **Description** |
 |----------------|---------------------|------------------|
@@ -102,7 +101,7 @@ Modern layout using TailwindCSS and Flowbite, ensuring clarity, consistency, and
 
 ---
 
-## Tech Stack
+### Tech Stack
 
 | **Layer** | **Technologies Used** |
 |------------|------------------------|
@@ -116,35 +115,35 @@ Modern layout using TailwindCSS and Flowbite, ensuring clarity, consistency, and
 
 ---
 
-## Installation
+### Installation
 
-### **1. Clone the Repository**
+#### **1. Clone the Repository**
 ```bash
 git clone https://github.com/KshitijSawant1/DASHED.git
 cd DASHED
 ```
-### 2. Install Dependencies
+#### 2. Install Dependencies
 ```bash 
 npm install
 ```
 
-### 3. Run the Development Server
+#### 3. Run the Development Server
 ```bash 
 npm run dev
 ```
-### 4. Open in Browser
+#### 4. Open in Browser
 ```bash 
 http://localhost:5173/
 ```
 ---
 
-## Vision & Mission
+### Vision & Mission
 
-### **Vision**
+#### **Vision**
 
 To transform Data Structures and Algorithms learning into an **interactive, intelligent, and self-paced experience** for students worldwide.
 
-### **Mission**
+#### **Mission**
 
 * Build tools that teach *how to think*, not just *what to code*.
 * Bridge the gap between theoretical learning and hands-on execution.
@@ -152,7 +151,7 @@ To transform Data Structures and Algorithms learning into an **interactive, inte
 
 ---
 
-## Future Enhancements
+### Future Enhancements
 
 * Expansion to **Queue, Linked List, Tree, and Graph** modules.
 * **Gamified XP system** for motivation and progress tracking.
@@ -163,7 +162,7 @@ To transform Data Structures and Algorithms learning into an **interactive, inte
 
 ---
 
-## Developer
+### Developer
 
 **Developed by:**
 **Kshitij K. Sawant**
@@ -171,7 +170,7 @@ To transform Data Structures and Algorithms learning into an **interactive, inte
 
 ---
 
-## License
+### License
 
 This project is licensed under the **MIT License**.
 See the `LICENSE` file for more details.
