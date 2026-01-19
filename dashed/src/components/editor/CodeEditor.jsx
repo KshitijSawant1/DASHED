@@ -420,7 +420,7 @@ except SyntaxError as e:
               height="100%"
               language="python"
               defaultLanguage="python"
-              theme="vs-dark"
+              theme="vs-light"
               value={code}
               onChange={(v) => setCode(v ?? "")}
               options={{
