@@ -4,15 +4,9 @@ export default function VisualizerLayout({ top, left, main, bottom }) {
   return (
     <div className="h-screen w-full grid grid-rows-[10vh_1fr_10vh] bg-white">
       {/* ───────── TOP BAR (10%) ───────── */}
-      <header className="border-b border-black/10 px-3 py-3">
-        <div className="mx-auto w-full max-w-screen-xl overflow-hidden">
-          <div className="grid grid-cols-[120px_minmax(0,1fr)] items-center gap-2">
-            {/* LEFT */}
-            <div className="flex h-10 items-center">{top}</div>
-
-            {/* RIGHT */}
-            <div className="flex h-10 items-center justify-between min-w-0"></div>
-          </div>
+      <header className="border-b border-black/10  py-3 overflow-hidden">
+        <div className="mx-auto w-full max-w-screen-xl">
+          <div className="w-full overflow-hidden">{top}</div>
         </div>
       </header>
 

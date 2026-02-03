@@ -41,7 +41,7 @@ export default function HomePage() {
           </div>
 
           {/* RIGHT VISUAL */}
-          <div className="relative flex justify-center  items-center">
+          <div className="relative flex justify-center items-center">
             <div className="w-[600px] h-[600px]">
               <LogoSTL />
             </div>

@@ -1,0 +1,54 @@
+{
+  "push": {
+    "title": "Stack.push (append)",
+    "reference": "# stack_push.py\nclass Stack:\n    def __init__(self):\n        self.items = []\n\n    def push(self, x):\n        self.items.append(x)\n\n\nif __name__ == \"__main__\":\n    s = Stack()\n    s.push(10)\n    s.push(20)\n    s.push(30)\n    print(\"After pushes:\", s.items)  # -> [10, 20, 30]\n    print(*s.items)  # space-separated view\n",
+    "steps": [
+      "class Stack:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def push(self, x):",
+      "        self.items.append(x)"
+    ]
+  },
+  "pop": {
+    "title": "Stack.pop (return last or -1)",
+    "reference": "# stack_pop.py\nclass Stack:\n    def __init__(self):\n        self.items = []\n\n    def pop(self):\n        if not self.items:\n            return -1\n        return self.items.pop()\n\n\nif __name__ == \"__main__\":\n    s = Stack()\n    s.items = [5, 7, 9]\n    print(\"Initial:\", s.items)\n    print(\"Pop:\", s.pop())\n    print(\"Pop:\", s.pop())\n    print(\"Pop:\", s.pop())\n    print(\"Pop on empty:\", s.pop())\n    print(\"Final:\", s.items)\n",
+    "steps": [
+      "class Stack:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def pop(self):",
+      "        if not self.items:",
+      "            return -1",
+      "        return self.items.pop()"
+    ]
+  },
+  "peek": {
+    "title": "Stack.peek (top or -1)",
+    "reference": "# stack_peek.py\nclass Stack:\n    def __init__(self):\n        self.items = []\n\n    def peek(self):\n        if not self.items:\n            return -1\n        return self.items[-1]\n\n\nif __name__ == \"__main__\":\n    s = Stack()\n    print(\"Peek on empty:\", s.peek())\n    s.items = [2, 4, 6]\n    print(\"Stack:\", s.items)\n    print(\"Peek:\", s.peek())\n",
+    "steps": [
+      "class Stack:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def peek(self):",
+      "        if not self.items:",
+      "            return -1",
+      "        return self.items[-1]"
+    ]
+  },
+  "display": {
+    "title": "Stack.display (print space-separated)",
+    "reference": "# stack_display.py\nclass Stack:\n    def __init__(self):\n        self.items = []\n\n    def display(self):\n        print(*self.items)\n\n\nif __name__ == \"__main__\":\n    s = Stack()\n    s.items = [1, 3, 5, 7]\n    print(\"Internal list:\", s.items)\n    print(\"Display method output:\")\n    s.display()\n",
+    "steps": [
+      "class Stack:",
+      "    def __init__(self):",
+      "        self.items = []",
+      "",
+      "    def display(self):",
+      "        print(*self.items)"
+    ]
+  }
+}
