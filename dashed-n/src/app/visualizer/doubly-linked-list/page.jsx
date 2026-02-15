@@ -29,71 +29,12 @@ export default function DoublyLinkedListPage() {
   const [indexWarning, setIndexWarning] = useState(false);
 
   const addresses = list.map(
-    (_, i) => `0x${(0x200000 + i * 0x1f3).toString(16).toUpperCase()}`,
+    (_, i) => `0x${(0x200000 + i * 0x2b3).toString(16).toUpperCase()}`,
   );
 
   const logMsg = (type, text) => setLog((p) => [{ type, text }, ...p]);
 
-  /* ───────── BASIC OPS ───────── */
-  const handleInsert = () => {
-    if (list.length >= MAX_NODES)
-      return logMsg("overflow", "OVERFLOW — List is full");
-
-    const value = Math.floor(Math.random() * 90 + 10);
-    setList((p) => [...p, value]);
-    logMsg("insert", `INSERT ${value} at END`);
-  };
-
-  const handleDelete = () => {
-    if (!list.length) return logMsg("underflow", "UNDERFLOW — List is empty");
-
-    const removed = list[0];
-    setList((p) => p.slice(1));
-    logMsg("delete", `DELETE ${removed} from START`);
-  };
-
-  const handlePeek = () => {
-    if (!list.length) return logMsg("underflow", "PEEK — List is empty");
-
-    logMsg("peek", `HEAD ${list[0]}`);
-    logMsg("peek", `TAIL ${list[list.length - 1]}`);
-  };
-
-  const handleClear = () => {
-    setList([]);
-    logMsg("clear", "CLEAR DOUBLY LINKED LIST");
-  };
-
-  /* ───────── TRAVERSE ───────── */
-  const handleTraverse = async () => {
-    if (!list.length || isTraversing) return;
-
-    setIsTraversing(true);
-    for (let i = 0; i < list.length; i++) {
-      setTraverseIndex(i);
-      await new Promise((r) => setTimeout(r, 600));
-    }
-    setTraverseIndex(null);
-    setIsTraversing(false);
-
-    logMsg("traverse", `FORWARD ${list.join(" ⇄ ")} → NULL`);
-  };
-
-  const handleTraverseBackward = async () => {
-    if (!list.length || isTraversing) return;
-
-    setIsTraversing(true);
-    for (let i = list.length - 1; i >= 0; i--) {
-      setTraverseIndex(i);
-      await new Promise((r) => setTimeout(r, 600));
-    }
-    setTraverseIndex(null);
-    setIsTraversing(false);
-
-    logMsg("traverse", `BACKWARD NULL ← ${list.join(" ⇄ ")}`);
-  };
-
-  /* ───────── INDEX OPS ───────── */
+  /* ───────── INSERT OPS ───────── */
   const insertAtStart = () => {
     if (list.length >= MAX_NODES)
       return logMsg("overflow", "OVERFLOW — List is full");
@@ -120,6 +61,9 @@ export default function DoublyLinkedListPage() {
     const v = Number(llValue);
     const i = Number(llIndex);
 
+    if (list.length >= MAX_NODES)
+      return logMsg("overflow", "OVERFLOW — List is full");
+
     if (Number.isNaN(v) || Number.isNaN(i) || i < 0 || i > list.length)
       return logMsg("underflow", "INVALID INDEX — Insert failed");
 
@@ -129,20 +73,21 @@ export default function DoublyLinkedListPage() {
     logMsg("insert", `INSERT ${v} at INDEX ${i}`);
   };
 
+  /* ───────── DELETE OPS ───────── */
   const deleteAtStart = () => {
     if (!list.length) return logMsg("underflow", "UNDERFLOW — List is empty");
 
-    const removed = list[0];
+    const v = list[0];
     setList((p) => p.slice(1));
-    logMsg("delete", `DELETE ${removed} from START`);
+    logMsg("delete", `DELETE ${v} from START`);
   };
 
   const deleteAtEnd = () => {
     if (!list.length) return logMsg("underflow", "UNDERFLOW — List is empty");
 
-    const removed = list[list.length - 1];
+    const v = list[list.length - 1];
     setList((p) => p.slice(0, -1));
-    logMsg("delete", `DELETE ${removed} from END`);
+    logMsg("delete", `DELETE ${v} from END`);
   };
 
   const deleteAtIndex = () => {
@@ -150,29 +95,53 @@ export default function DoublyLinkedListPage() {
     if (Number.isNaN(i) || i < 0 || i >= list.length)
       return logMsg("underflow", "INVALID INDEX — Delete failed");
 
-    const removed = list[i];
+    const v = list[i];
     const updated = [...list];
     updated.splice(i, 1);
     setList(updated);
-    logMsg("delete", `DELETE ${removed} at INDEX ${i}`);
+    logMsg("delete", `DELETE ${v} at INDEX ${i}`);
   };
 
-  const safeInsertIndex = () => {
-    if (llIndex === "") {
-      setIndexWarning(true);
-      setTimeout(() => setIndexWarning(false), 2000);
-      return;
-    }
-    insertAtIndex();
+  /* ───────── PEEK ───────── */
+  const handlePeek = () => {
+    if (!list.length) return logMsg("underflow", "PEEK — List is empty");
+
+    logMsg("peek", `HEAD ${list[0]}`);
+    logMsg("peek", `TAIL ${list[list.length - 1]}`);
   };
 
-  const safeDeleteIndex = () => {
-    if (llIndex === "") {
-      setIndexWarning(true);
-      setTimeout(() => setIndexWarning(false), 2000);
-      return;
+  /* ───────── TRAVERSE ───────── */
+  const traverseForward = async () => {
+    if (!list.length || isTraversing) return;
+    setIsTraversing(true);
+
+    for (let i = 0; i < list.length; i++) {
+      setTraverseIndex(i);
+      await new Promise((r) => setTimeout(r, 600));
     }
-    deleteAtIndex();
+
+    setTraverseIndex(null);
+    setIsTraversing(false);
+    logMsg("traverse", `FORWARD ${list.join(" ⇄ ")} → NULL`);
+  };
+
+  const traverseBackward = async () => {
+    if (!list.length || isTraversing) return;
+    setIsTraversing(true);
+
+    for (let i = list.length - 1; i >= 0; i--) {
+      setTraverseIndex(i);
+      await new Promise((r) => setTimeout(r, 600));
+    }
+
+    setTraverseIndex(null);
+    setIsTraversing(false);
+    logMsg("traverse", `BACKWARD NULL ← ${list.join(" ⇄ ")}`);
+  };
+
+  const handleClear = () => {
+    setList([]);
+    logMsg("clear", "CLEAR LINKED LIST");
   };
 
   /* ───────── UI ───────── */
@@ -227,13 +196,13 @@ export default function DoublyLinkedListPage() {
           <div className="p-4 space-y-2">
             <h2 className="text-sm font-semibold">Traverse</h2>
             <button
-              onClick={handleTraverse}
+              onClick={traverseForward}
               className="w-full border rounded py-1 text-xs hover:bg-black/5"
             >
               Forward
             </button>
             <button
-              onClick={handleTraverseBackward}
+              onClick={traverseBackward}
               className="w-full border rounded py-1 text-xs hover:bg-black/5"
             >
               Backward
@@ -281,28 +250,17 @@ export default function DoublyLinkedListPage() {
       {/* FOOTER */}
       <footer className="fixed bottom-0 left-0 w-full h-16 bg-white border-t">
         <div className="grid h-full max-w-lg grid-cols-5 mx-auto">
-          <FooterBtn icon={FiPlus} label="Insert" onClick={handleInsert} />
-          <FooterBtn icon={FiMinus} label="Delete" onClick={handleDelete} />
+          <FooterBtn icon={FiPlus} label="Insert" onClick={insertAtEnd} />
+          <FooterBtn icon={FiMinus} label="Delete" onClick={deleteAtStart} />
           <FooterBtn icon={FiEye} label="Peek" onClick={handlePeek} />
           <FooterBtn
             icon={FiShuffle}
             label="Traverse"
-            onClick={handleTraverse}
-            disabled={isTraversing}
+            onClick={traverseForward}
           />
           <FooterBtn icon={FiX} label="Clear" onClick={handleClear} />
         </div>
       </footer>
-
-      {/* INDEX WARNING */}
-      {indexWarning && (
-        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-50">
-          <div className="flex items-center gap-2 px-4 py-2 bg-red-100 border border-red-300 rounded-full shadow text-xs text-red-700">
-            <MdOutlineDangerous />
-            Please provide a valid index
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -318,11 +276,10 @@ const Info = ({ label, value }) => (
   </div>
 );
 
-const FooterBtn = ({ icon: Icon, label, onClick, disabled }) => (
+const FooterBtn = ({ icon: Icon, label, onClick }) => (
   <button
     onClick={onClick}
-    disabled={disabled}
-    className="inline-flex flex-col items-center justify-center hover:bg-black/5 disabled:opacity-40"
+    className="inline-flex flex-col items-center justify-center hover:bg-black/5"
   >
     <Icon className="text-lg text-black" />
     <span className="text-xs">{label}</span>

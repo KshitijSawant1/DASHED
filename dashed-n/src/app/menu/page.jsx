@@ -9,10 +9,17 @@ import {
   Network,
   GitMerge,
   Link2,
+  Link,
   Code2,
 } from "lucide-react";
 
 const MENU_ITEMS = [
+  {
+    title: "Code Editor",
+    description: "Experiment with code and logic side by side.",
+    icon: Code2,
+    route: "/editor",
+  },
   {
     title: "Stack",
     description: "Visualize push, pop, and LIFO behavior step by step.",
@@ -56,10 +63,10 @@ const MENU_ITEMS = [
     route: "/visualizer/linked-list",
   },
   {
-    title: "Code Editor",
-    description: "Experiment with code and logic side by side.",
-    icon: Code2,
-    route: "/editor",
+    title: "Doubly Linked List",
+    description: "Watch nodes connect and traverse in both ways.",
+    icon: Link,
+    route: "/visualizer/doubly-linked-list",
   },
 ];
 
